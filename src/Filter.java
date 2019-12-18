@@ -168,24 +168,28 @@ public class Filter extends JFrame {
 
 //////////////////////////////------Coolest Part------///////////////////////////////////////
 
-		JButton outbtn = new JButton("Cool");
-		outbtn.setBounds(576, 242, 162, 25);
+		JButton outbtn = new JButton("Dark");
+		outbtn.setBounds(580, 246, 162, 25);
 		contentPane.add(outbtn);
 		outbtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (int xx = 1; xx < image.getWidth() - 5; xx += 5) {
-					for (int yy = 1; yy < image.getHeight() - 5; yy += 5) {
-						int pixel = image.getRGB(xx - 1, yy - 1);
+				for (int xx = 1; xx < image.getWidth() ; xx ++) {
+					for (int yy = 1; yy < image.getHeight(); yy ++) {
+						int pixel = image.getRGB(xx, yy);
 
 						int red = (pixel >> 16) & 0x0ff;
 						int green = (pixel >> 8) & 0x0ff;
 						int blue = (pixel) & 0x0ff;
 						
-						int nred = (red >= 130 && red<245) ? red+10 : red;
-						int ngreen = (green<20) ? 0 : (green-20);
-						int nblue = (blue >= 120 && blue<245)? blue+10 : blue;
+						int nred = (red >100)? red-10 : red;
+						int ngreen = (green >100)? green-20 : green;
+						int nblue = (blue >100)? blue-10 : blue;
+						
+						 nred = (nred ) < 0 ? 0 : (nred );
+						 ngreen = (ngreen)< 0 ? 0 : (ngreen );
+						 nblue = (nblue ) < 0 ? 0 : (nblue );
 
 						image.setRGB(xx, yy, new Color(nred, ngreen, nblue).getRGB());
 
@@ -261,7 +265,35 @@ public class Filter extends JFrame {
 				}
 			}
 		});
+		JButton btnBlackAndWhite = new JButton("Black and White");
+		btnBlackAndWhite.setBounds(580, 275, 150, 25);
+		contentPane.add(btnBlackAndWhite);
 		
+		btnBlackAndWhite.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int vahid;
+				for (int xx = 0; xx < image.getWidth(); xx++) {
+					for (int yy = 0; yy < image.getHeight(); yy++) {
+						int pixel = image.getRGB(xx, yy);
+
+						int red = (pixel >> 16) & 0x0ff;
+						int green = (pixel >> 8) & 0x0ff;
+						int blue = (pixel) & 0x0ff;
+						
+						vahid = (int)(red+green+blue)/3;
+
+						image.setRGB(xx, yy, new Color(vahid, vahid, vahid).getRGB());
+
+					}
+
+				}
+				lblNewLabel.setIcon(new ImageIcon(image));
+
+				
+			}
+		});
 		
 		
 //////////////////////////////------Reset Part------///////////////////////////////////////
@@ -292,7 +324,10 @@ public class Filter extends JFrame {
 		JButton btnNewImage = new JButton("New Image");
 		btnNewImage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				if(count == 1) {
+					JOptionPane.showMessageDialog(null, "You did not save the image,"
+							+ " make sure you save the current image before you upload a new one");
+				}
 				JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 				int returnValue = jfc.showOpenDialog(null);
 				if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -301,10 +336,9 @@ public class Filter extends JFrame {
 					f = new File(selectedFile.getAbsolutePath());
 					try {
 						image = ImageIO.read(f);
-						JOptionPane.showMessageDialog(null, new JLabel(new ImageIcon(image)));
+						//JOptionPane.showMessageDialog(null, new JLabel(new ImageIcon(image)));
 						lblNewLabel.setIcon(new ImageIcon(image));
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
@@ -320,6 +354,8 @@ public class Filter extends JFrame {
 		JButton btnSave = new JButton("Save");
 		btnSave.setBounds(624, 453, 114, 25);
 		contentPane.add(btnSave);
+		
+		
 		btnSave.addActionListener(new ActionListener() {
 
 			@Override
