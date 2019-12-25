@@ -19,16 +19,11 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
 public class Filter extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
+	
 	File f = new File("old.jpg");
 	BufferedImage image = ImageIO.read(f);
 	int count =1;
@@ -75,7 +70,7 @@ public class Filter extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		
-//////////////////////////////------The Brightest Part------///////////////////////////////////////
+////////////////////////////////------The Brightest Part------///////////////////////////////////////
 		JButton btnRed = new JButton("Bright");
 		btnRed.setBounds(580, 103, 156, 25);
 		contentPane.add(btnRed);
@@ -104,7 +99,7 @@ public class Filter extends JFrame {
 			}
 		});
 
-//////////////////////////////------Different Part------///////////////////////////////////////
+////////////////////////////////------Different Part------///////////////////////////////////////
 		JButton btnOne = new JButton("Different");
 		btnOne.setBounds(580, 140, 154, 25);
 		contentPane.add(btnOne);
@@ -284,7 +279,7 @@ public class Filter extends JFrame {
 						
 						vahid = (int)(red+green+blue)/3;
 
-						image.setRGB(xx, yy, new Color(vahid, vahid, vahid).getRGB());
+						image.setRGB(xx, yy, new Color(red, red, red).getRGB());
 
 					}
 
@@ -350,7 +345,7 @@ public class Filter extends JFrame {
 		btnNewImage.setBounds(622, 484, 114, 25);
 		contentPane.add(btnNewImage);
 		
-		//////////////////////////////------Save Part------///////////////////////////////////////
+/////////////////////////////////////------Save Part------///////////////////////////////////////
 		JButton btnSave = new JButton("Save");
 		btnSave.setBounds(624, 453, 114, 25);
 		contentPane.add(btnSave);
